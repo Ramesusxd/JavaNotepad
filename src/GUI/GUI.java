@@ -1,9 +1,20 @@
 package GUI;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
-public class GUI {
+
+
+
+public class GUI implements ActionListener {
 
     JFrame window;
     JTextArea textArea;
@@ -11,6 +22,8 @@ public class GUI {
     JMenuBar menuBar;
     JMenu menuFile, menuEdit, menuFormat, menuColor;
     JMenuItem iNew, iOpen, iSave, iSaveAs, iExit;
+
+    Function_File file = new Function_File(this);
 
 
     public static void main(String[] args) {
@@ -63,9 +76,13 @@ public class GUI {
 
     public void createFileMenu() {
         iNew = new JMenuItem("New");
+        iNew.addActionListener(this);
+        iNew.setActionCommand("New");
         menuFile.add(iNew);
 
         iOpen = new JMenuItem("Open");
+        iOpen.addActionListener(this);
+        iOpen.setActionCommand("Open");
         menuFile.add(iOpen);
 
         iSave = new JMenuItem("Save");
@@ -82,6 +99,15 @@ public class GUI {
 
 
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
 
+        String command = e.getActionCommand();
 
+        switch(command) {
+            case "New": file.newFile(); break;
+            case "Open": file.open(); break;
+        }
+
+    }
 }
