@@ -12,12 +12,12 @@ public class Function_File {
     String fileAddress;
 
     public Function_File(GUI gui) {
-
+//  code makes reference to the GUI.java for functions
         this.gui = gui;
     }
 
     public void newFile() {
-
+//  code clears whats in the textArea for a new page
         gui.textArea.setText("");
         gui.window.setTitle("New");
         fileName = null;
@@ -27,7 +27,7 @@ public class Function_File {
 
         FileDialog fd = new FileDialog(gui.window, "Open", FileDialog.LOAD);
         fd.setVisible(true);
-
+//  code allows you to open files
         if (fd.getFile() != null) {
             fileName = fd.getFile();
             fileAddress =fd.getDirectory();
@@ -50,16 +50,16 @@ public class Function_File {
 
         } catch(Exception e) {
             System.out.println("FILE NOT OPENED");
-
+// warning if there was a error with opening the file
         }
     }
     public void save() {
-
+// code is the method to save files in a overwrite fashion
         if(fileName==null) {
             saveAs();
         }
         else {
-            try {
+            try { // address is needed to save file
                 FileWriter fw = new FileWriter(fileAddress + fileName);
                 fw.write(gui.textArea.getText());
                 gui.window.setTitle(fileName);
@@ -75,7 +75,7 @@ public class Function_File {
 
         FileDialog fd = new FileDialog(gui.window, "Save", FileDialog.SAVE);
         fd.setVisible(true);
-
+// code to hard save file
         if(fd.getFile()!=null) {
             fileName = fd.getFile();
             fileAddress = fd.getDirectory();
@@ -89,12 +89,12 @@ public class Function_File {
 
         } catch(Exception e) {
 
-            System.out.println("SOMETHIING WENT WRONG FILE DID NOT SAVE");
+            System.out.println("SOMETHING WENT WRONG FILE DID NOT SAVE");
         }
     }
 
     public void exit() {
-
+//  closes the program
         System.exit(0);
     }
 
