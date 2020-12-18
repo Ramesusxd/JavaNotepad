@@ -7,6 +7,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.undo.UndoManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -27,6 +28,8 @@ public class GUI implements ActionListener {
     JMenu menuFile, menuEdit, menuFormat, menuColor;
     // File
     JMenuItem iNew, iOpen, iSave, iSaveAs, iExit;
+
+    JMenuItem iUndo, iRedo;
     // Format
     JMenuItem iWrap, iFontArial, iFontCSMS, iFontTNR, iFontSize8, iFontSize12, iFontSize16, iFontSize20, iFontSize24, iFontSize28;
     JMenu menuFont, menuFontSize;
@@ -36,6 +39,9 @@ public class GUI implements ActionListener {
     Function_File file = new Function_File(this);
     Function_Format format = new Function_Format(this);
     Function_Color color = new Function_Color(this);
+    Function_Edit edit = new Function_Edit(this);
+
+    UndoManager  um = new UndoManager();
 
 
     public static void main(String[] args) {
@@ -49,6 +55,7 @@ public class GUI implements ActionListener {
         createTextArea();
         createMenuBar();
         createFileMenu();
+        createEditMenu();
         createFormatMenu();
         createColorMenu();
 
@@ -70,6 +77,10 @@ public class GUI implements ActionListener {
     public void createTextArea() {
 
         textArea = new JTextArea();
+
+        textArea.getDocument().addUndoableEditListener(
+                e -> um.addEdit(e.getEdit()));
+
 
         scrollPane = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
@@ -118,6 +129,20 @@ public class GUI implements ActionListener {
         iExit.addActionListener(this);
         iExit.setActionCommand("Exit");
         menuFile.add(iExit);
+
+    }
+    public void createEditMenu() {
+
+        iUndo = new JMenuItem("Undo");
+        iUndo.addActionListener(this);
+        iUndo.setActionCommand("Undo");
+        menuEdit.add(iUndo);
+
+        iRedo = new JMenuItem("Redo");
+        iRedo.addActionListener(this);
+        iRedo.setActionCommand("Redo");
+        menuEdit.add(iRedo);
+
 
     }
     public void createFormatMenu() {
@@ -208,6 +233,8 @@ public class GUI implements ActionListener {
             case "Save": file.save(); break;
             case "SaveAs": file.saveAs(); break;
             case "Exit": file.exit(); break;
+            case "Undo": edit.undo(); break;
+            case "Redo": edit.redo(); break;
             case "Word Wrap": format.wordWrap(); break;
             case "Arial": format.setFont(command); break;
             case "Comic Sans MS": format.setFont(command); break;
