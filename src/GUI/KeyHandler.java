@@ -26,7 +26,7 @@ public class KeyHandler implements KeyListener {
             gui.file.save();
         }
         // Shift + s key will do a Save As
-        if(e.isShiftDown() && e.isControlDown() && e.getKeyCode()==KeyEvent.VK_S) {
+        if(e.isShiftDown() && e.isShiftDown() && e.getKeyCode()==KeyEvent.VK_S) {
             gui.file.save();
         }
         // Alt + F key will open the file menu
