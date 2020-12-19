@@ -41,6 +41,8 @@ public class GUI implements ActionListener {
     Function_Color color = new Function_Color(this);
     Function_Edit edit = new Function_Edit(this);
 
+    KeyHandler kHandler = new KeyHandler(this);
+
     UndoManager  um = new UndoManager();
 
 
@@ -77,6 +79,8 @@ public class GUI implements ActionListener {
     public void createTextArea() {
 
         textArea = new JTextArea();
+
+        textArea.addKeyListener(kHandler);
 
         textArea.getDocument().addUndoableEditListener(
                 e -> um.addEdit(e.getEdit()));
